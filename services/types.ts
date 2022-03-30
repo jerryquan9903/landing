@@ -14,7 +14,7 @@ export type Sheet = {
   artist: {
     name: string
   }[],
-  notes: string,
+  notes?: string,
   link: {
     ref: string,
     url: string
