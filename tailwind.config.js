@@ -4,7 +4,9 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    boxShadow: {
+      'portfolio': 'rgba(0, 0, 0, 0.24) 0px 3px 8px'
+    }
   },
   plugins: [
     require('@tailwindcss/line-clamp')

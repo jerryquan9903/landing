@@ -650,6 +650,13 @@ type Workplace {
   startDate: DateTime
   endDate: DateTime
   desc: Workplace_desc_Document
+  projects(
+    where: ProjectWhereInput! = {}
+    orderBy: [ProjectOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Project!]
+  projectsCount(where: ProjectWhereInput! = {}): Int
 }
 
 type Workplace_desc_Document {
@@ -669,6 +676,13 @@ input WorkplaceWhereInput {
   role: StringFilter
   startDate: DateTimeFilter
   endDate: DateTimeFilter
+  projects: ProjectManyRelationFilter
+}
+
+input ProjectManyRelationFilter {
+  every: ProjectWhereInput
+  some: ProjectWhereInput
+  none: ProjectWhereInput
 }
 
 input WorkplaceOrderByInput {
@@ -685,6 +699,14 @@ input WorkplaceUpdateInput {
   startDate: DateTime
   endDate: DateTime
   desc: JSON
+  projects: ProjectRelateToManyForUpdateInput
+}
+
+input ProjectRelateToManyForUpdateInput {
+  disconnect: [ProjectWhereUniqueInput!]
+  set: [ProjectWhereUniqueInput!]
+  create: [ProjectCreateInput!]
+  connect: [ProjectWhereUniqueInput!]
 }
 
 input WorkplaceUpdateArgs {
@@ -698,6 +720,12 @@ input WorkplaceCreateInput {
   startDate: DateTime
   endDate: DateTime
   desc: JSON
+  projects: ProjectRelateToManyForCreateInput
+}
+
+input ProjectRelateToManyForCreateInput {
+  create: [ProjectCreateInput!]
+  connect: [ProjectWhereUniqueInput!]
 }
 
 type Image {
@@ -766,11 +794,13 @@ input ImageCreateInput {
 type Project {
   id: ID!
   name: String
+  job: Workplace
   link: String
   images: Project_images_Document
   role: String
   responsibility: Project_responsibility_Document
   technology: Project_technology_Document
+  short: String
   description: Project_description_Document
 }
 
@@ -800,8 +830,10 @@ input ProjectWhereInput {
   NOT: [ProjectWhereInput!]
   id: IDFilter
   name: StringFilter
+  job: WorkplaceWhereInput
   link: StringFilter
   role: StringFilter
+  short: StringFilter
 }
 
 input ProjectOrderByInput {
@@ -809,16 +841,25 @@ input ProjectOrderByInput {
   name: OrderDirection
   link: OrderDirection
   role: OrderDirection
+  short: OrderDirection
 }
 
 input ProjectUpdateInput {
   name: String
+  job: WorkplaceRelateToOneForUpdateInput
   link: String
   images: JSON
   role: String
   responsibility: JSON
   technology: JSON
+  short: String
   description: JSON
+}
+
+input WorkplaceRelateToOneForUpdateInput {
+  create: WorkplaceCreateInput
+  connect: WorkplaceWhereUniqueInput
+  disconnect: Boolean
 }
 
 input ProjectUpdateArgs {
@@ -828,12 +869,19 @@ input ProjectUpdateArgs {
 
 input ProjectCreateInput {
   name: String
+  job: WorkplaceRelateToOneForCreateInput
   link: String
   images: JSON
   role: String
   responsibility: JSON
   technology: JSON
+  short: String
   description: JSON
+}
+
+input WorkplaceRelateToOneForCreateInput {
+  create: WorkplaceCreateInput
+  connect: WorkplaceWhereUniqueInput
 }
 
 """

@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { ChevronLeftIcon, ChevronRightIcon, XIcon } from '@heroicons/react/solid';
-import { projectsData } from '../../services/commons';
+import { PortfolioColor, Project } from '../../services/types';
+import { ProjectContext } from '../../pages/portfolio';
 
 const ImageViewer = (
   { feed, index, onClose, onChange }:
@@ -35,66 +36,64 @@ const ImageViewer = (
   )
 }
 
-const Project = ({ data }: { data: projectsData }) => {
+const ProjectDetails = ({ projectData, color }: { projectData: Project, color: PortfolioColor }) => {
   const [showImage, setShowImage] = useState<{ show: boolean, index: number }>({
     show: false, index: 0
   });
 
   const DescLine = ({ title, lineText }: { title: string, lineText: React.ReactElement[] | string }) => {
     return (
-      <div className="flex flex-col w-full" key={`${data.id} ${title}`}>
-        <div className="font-bold text-lg pt-3">{title}</div>
-        <ul className="border-gray-300 px-4 py-3">
+      <div className="flex flex-col w-full" key={`${projectData.id} ${title}`}>
+        <div className="font-black text-md pt-2">{title.toUpperCase()}</div>
+        <ul className="border-gray-300 px-4 py-2">
           {typeof lineText === "object" && lineText.map((line, index) => (
-            <li key={`${data.id} ${title} ${index}`} className="leading-7 font-medium">
+            <li key={`${projectData.id} ${title} ${index}`} className="font-regular">
               {line}
             </li>
           ))}
-          {typeof lineText === "string" && <div className="leading-7 font-medium">{lineText}</div>}
+          {typeof lineText === "string" && <div className="">{lineText}</div>}
         </ul>
       </div>
     )
   }
 
   return (
-    <div className="w-full flex flex-col mb-4 lg:mb-8 overflow-hidden bg-white">
+    <div className="w-full ver-scroll grid grid-rows-12 mb-4 lg:mb-8">
       <div
-        className={`bg-emerald-700 flex justify-between rounded-t-2xl items-center w-full border-2
-         border-emerald-700 px-4 py-2 text-white`}
+        className={`flex flex-col ${color.bgMain} flex justify-between rounded-t-md items-start w-full border-2
+         ${color.border} px-4 py-2 text-black`}
       >
-        <div className="flex flex-col">
-          <div className="font-bold text-2xl">{data.name}</div>
-          <a
-            href={data.link}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="cursor-pointer underline italic text-lg"
-          >
-            {data.link?.replace("http://", "").replace("https://", "")}
-          </a>
-        </div>
+        <div className="font-bold text-2xl">{projectData.name}</div>
+        <a
+          href={projectData.link}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="cursor-pointer underline italic text-lg"
+        >
+          {projectData.link?.replace("http://", "").replace("https://", "")}
+        </a>
       </div>
-      <div className={`flex-1 flex flex-col w-full rounded-b-2xl border-b-2 border-l-2 border-r-2 border-emerald-700 p-4`}>
-        <div className="h-[25vh] flex justify-start -mx-2 pb-4 pt-2 overflow-x-scroll hor-scroll">
-          {data.images[0] && data.images.map((url, index) => (
+      <div className={`flex-1 row-span-11 flex flex-col w-full rounded-b-2xl border-b-2 border-l-2 border-r-2 ${color.border} p-4`}>
+        <div className="flex justify-start h-[25vh] -mx-2 pb-4 pt-2 overflow-x-scroll hor-scroll">
+          {projectData.images[0] && projectData.images.map((url, index) => (
             <img
-              className="h-full object-contain rounded-lg mx-2 image-shadow cursor-pointer"
+              className="object-contain rounded-lg mx-2 image-shadow cursor-pointer"
               src={'http://localhost:3000' + url}
               key={url}
               onClick={() => setShowImage({ show: true, index: index })}
             />
           ))}
         </div>
-        <div className="flex flex-col w-full mt-4 ver-scroll">
-          <DescLine title="Description" lineText={data.description} />
-          <DescLine title="Role" lineText={data.role} />
-          <DescLine title="Responsibility" lineText={data.responsibility} />
-          <DescLine title="Technologies" lineText={data.technology} />
+        <div className="flex flex-col row-span-7 w-full h-[35vh] mt-4 ver-scroll overflow-y-scroll">
+          <DescLine title="Description" lineText={projectData.description} />
+          <DescLine title="Role" lineText={projectData.role} />
+          <DescLine title="Responsibility" lineText={projectData.responsibility} />
+          <DescLine title="Technologies" lineText={projectData.technology} />
         </div>
       </div>
       {showImage.show &&
         <ImageViewer
-          feed={data.images}
+          feed={projectData.images}
           index={showImage.index}
           onClose={() => setShowImage({ ...showImage, show: false })}
           onChange={(idx) => setShowImage({ ...showImage, index: idx })}
@@ -104,14 +103,4 @@ const Project = ({ data }: { data: projectsData }) => {
   )
 }
 
-const Projects = ({ projects }: { projects: projectsData[] }) => {
-  return (
-    <div className="flex flex-col justify-start w-full items-center">
-      {projects && projects[0] && projects.map((project) => (
-        <Project data={project} key={project.id} />
-      ))}
-    </div>
-  );
-};
-
-export default Projects;
+export default ProjectDetails;

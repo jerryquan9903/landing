@@ -87,12 +87,13 @@ model Source {
 }
 
 model Workplace {
-  id        String   @id @default(cuid())
-  name      String   @default("")
-  role      String   @default("")
+  id        String    @id @default(cuid())
+  name      String    @default("")
+  role      String    @default("")
   startDate DateTime
   endDate   DateTime
-  desc      String   @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+  desc      String    @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+  projects  Project[] @relation("Project_job")
 }
 
 model Image {
@@ -108,12 +109,17 @@ model Image {
 }
 
 model Project {
-  id             String @id @default(cuid())
-  name           String @default("")
-  link           String @default("")
-  images         String @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
-  role           String @default("")
-  responsibility String @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
-  technology     String @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
-  description    String @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+  id             String     @id @default(cuid())
+  name           String     @default("")
+  job            Workplace? @relation("Project_job", fields: [jobId], references: [id])
+  jobId          String?    @map("job")
+  link           String     @default("")
+  images         String     @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+  role           String     @default("")
+  responsibility String     @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+  technology     String     @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+  short          String     @default("")
+  description    String     @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+
+  @@index([jobId])
 }

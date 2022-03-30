@@ -112,8 +112,8 @@ const Sheets = ({ sheetsRaw }: { sheetsRaw: Sheet[] }) => {
           </div>
         </div>
         <div className="flex flex-col mt-8">
-          <div className="flex flex-col lg:flex-row justify-center xl:justify-between items-center p-4 bg-neutral-100 rounded-md ">
-            <div className="border border-neutral-300 bg-white rounded-md w-full lg:w-1/2 h-10 flex justify-between items-center px-3 mb-2 lg:mb-0">
+          <div className="flex flex-col md:flex-row justify-center md:justify-between items-start md:items-center p-4 bg-neutral-100 rounded-md ">
+            <div className="border border-neutral-300 bg-white rounded-md w-full md:w-1/2 h-10 flex justify-between items-center px-3 mb-2 lg:mb-0">
               <input
                 className="flex-1 h-full outline-none font-medium pr-3"
                 placeholder="Search"
@@ -132,21 +132,21 @@ const Sheets = ({ sheetsRaw }: { sheetsRaw: Sheet[] }) => {
             />
           </div>
           <div className="bg-neutral-100 mt-4 rounded-md">
-            <div className="hidden lg:grid grid-cols-12 gap-2 p-4 mt-2">
-              <div className="col-span-1"></div>
-              <div className="col-span-4 font-bold">Info</div>
+            <div className="hidden md:grid grid-cols-12 gap-2 p-4 mt-2">
+              <div className="col-span-2"></div>
+              <div className="col-span-4 lg:col-span-5 font-bold">Info</div>
               <div className="col-span-4 font-bold">Difficulty</div>
-              <div className="col-span-2 font-bold">Date</div>
+              <div className="col-span-2 lg:col-span-1 font-bold">Date</div>
             </div>
             <div className="flex flex-col flex-1 overflow-y-scroll hide-scroll">
               {sortedSheets[0] && sortedSheets.filter(filterSearch).map((sheet: SheetProps, index: number) => (
                 <div
                   key={`${sheet.title} ${sheet.artists} ${sheet.media}`}
-                  className={`flex flex-col items-start lg:grid grid-cols-12 gap-2 py-4 mx-4 border-neutral-300 
-                  ${index === 0 ? "lg:border-t" : "border-t"} 
+                  className={`flex flex-col items-start md:grid md:grid-cols-12 md:items-center gap-2 py-4 mx-4 border-neutral-300 
+                  ${index === 0 ? "md:border-t" : "border-t"} 
                   `}
                 >
-                  <div className="hidden lg:flex col-span-1 justify-center items-center">
+                  <div className="hidden md:flex col-span-2 justify-center items-center">
                     {sheet.image &&
                       <img
                         src={`http://localhost:3000${sheet.image}`}
@@ -155,13 +155,12 @@ const Sheets = ({ sheetsRaw }: { sheetsRaw: Sheet[] }) => {
                       />
                     }
                   </div>
-                  <div className="col-span-4 flex flex-col justify-center text-gray-900">
+                  <div className="col-span-4 lg:col-span-5 flex flex-col justify-center text-gray-900">
                     <div className="text-xl font-bold flex items-center">
-                      <div className="hidden lg:block">{sheet.title}</div>
                       <a
                         href={sheet.link}
                         download={sheet.artists + " - " + sheet.title + ".pdf"}
-                        className="lg:hidden flex justify-center items-center cursor-pointer text-sky-700"
+                        className="flex justify-center items-center cursor-pointer text-sky-700"
                       >
                         {sheet.title}
                       </a>
@@ -199,10 +198,10 @@ const Sheets = ({ sheetsRaw }: { sheetsRaw: Sheet[] }) => {
                         )
                     })}
                   </div>
-                  <div className="col-span-2 flex items-center font-medium">
+                  <div className="col-span-2 lg:col-span-1 flex w-full items-center font-medium">
                     {dayjs(sheet.date).format('YYYY/MM')}
                   </div>
-                  <a
+                  {/* <a
                     href={sheet.link}
                     download={sheet.artists + " - " + sheet.title + ".pdf"}
                     className="hidden col-span-1 lg:flex justify-center items-center"
@@ -210,7 +209,7 @@ const Sheets = ({ sheetsRaw }: { sheetsRaw: Sheet[] }) => {
                     <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 mx-0.5" viewBox="0 0 24 24" fill="#0369a1">
                       <path d="M15.003 3h2.997v5h-2.997v-5zm8.997 1v20h-24v-24h20l4 4zm-19 5h14v-7h-14v7zm16 4h-18v9h18v-9z" />
                     </svg>
-                  </a>
+                  </a> */}
                 </div>
               ))}
             </div>

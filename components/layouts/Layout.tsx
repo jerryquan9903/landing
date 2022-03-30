@@ -27,7 +27,7 @@ const MobileMenu = () => {
 
   return (
     <>
-      <div className="lg:hidden fixed inset-x-0 top-0 z-[1000] h-16 w-full 
+      <div className="md:hidden fixed inset-x-0 top-0 z-[1000] h-16 w-full 
       flex justify-between items-center p-4 bg-emerald-700 image-shadow">
         <div className="text-white font-bold">{title}</div>
         <div onClick={openMenu}>
@@ -54,7 +54,7 @@ const MobileMenu = () => {
 }
 
 const DesktopMenu = () => (
-  <div className="hidden lg:flex items-center justify-end w-2/3 h-24 px-4 text-xl font-bold text-emerald-700">
+  <div className="hidden md:flex items-center justify-end w-11/12 xl:w-2/3 h-24 text-xl font-bold text-emerald-700">
     <Link href="/">
       <a className="mr-8">home</a>
     </Link>

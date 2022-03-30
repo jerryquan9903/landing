@@ -1,109 +1,133 @@
-import dayjs from "dayjs";
 import React, { useState } from "react";
-import Projects from "../../components/portfolio/Projects";
-import Timeline from "../../components/portfolio/Timeline";
-import { jobData, projectsData } from "../../services/commons";
 import { buildKeystoneDoc } from "../../services/tools/buildKeystoneDoc";
 import { processKeystoneGallery } from "../../services/tools/processKeystoneGallery";
 import { query } from '.keystone/api';
-import { Lists } from '.keystone/types';
+import { Job, PortfolioColor, Project } from "../../services/types";
+import JobComponent from "../../components/portfolio/JobComponent";
+import ProjectDetails from "../../components/portfolio/ProjectDetails";
 
 const TIMELINE_QUERY = `
   id
   name
   role
-  startDate,
-  endDate,
+  startDate
+  endDate
   desc {
     document
   }
+  projects {
+    id
+    name
+    link
+    job {
+      id
+    }
+    role
+    short
+    images {
+      document
+    }
+    responsibility {
+      document
+    }
+    technology {
+      document
+    }
+    description {
+      document
+    }
+  }
 `
 
-const PROJECTS_QUERY = `
-  id
-  name
-  link
-  role
-  images {
-    document
-  }
-  responsibility {
-    document
-  }
-  technology {
-    document
-  }
-  description {
-    document
-  }
-`
+const colors: PortfolioColor[] = [
+  {
+    bgMain: "bg-red-200",
+    bgSub: "bg-red-100",
+    bgLine: "bg-red-600",
+    border: "border-red-600",
+    shadow: "shadow-red-400"
+  },
+  {
+    bgMain: "bg-emerald-300",
+    bgSub: "bg-emerald-200",
+    bgLine: "bg-emerald-700",
+    border: "border-emerald-700",
+    shadow: "shadow-emerald-500"
+  },
+  {
+    bgMain: "bg-sky-200",
+    bgSub: "bg-sky-100",
+    bgLine: "bg-sky-600",
+    border: "border-sky-600",
+    shadow: "shadow-sky-400"
+  },
+]
 
-const Portfolio = ({ jobs, projects }: { jobs: any, projects: any }) => {
-  const [tab, setTab] = useState<number>(0);
-  const [timelineData] = useState<jobData[]>(() => {
-    const processedData: jobData[] = [];
-    for (const work of jobs) {
-      let desc = buildKeystoneDoc(work.desc.document, work.id);
-      processedData.push({
-        id: work.id,
-        name: work.name,
-        role: work.role,
+export const ProjectContext = React.createContext({});
+
+const Portfolio = ({ jobs }: { jobs: any }) => {
+  const [portfolioData] = useState<Job[]>(() => {
+    const processedJobs: Job[] = [];
+
+    for (const job of jobs) {
+      let desc = buildKeystoneDoc(job.desc.document, job.id);
+      const processedProjects: Project[] = [];
+
+      if (job.projects.length > 0) {
+        for (const project of job.projects) {
+          processedProjects.push({
+            id: project.id,
+            name: project.name,
+            link: project.link,
+            job: project.job.id,
+            short: project.short,
+            role: project.role,
+            images: processKeystoneGallery(project.images.document[1]),
+            responsibility: buildKeystoneDoc(project.responsibility.document, project.id + " res"),
+            technology: buildKeystoneDoc(project.technology.document, project.id + " tech"),
+            description: buildKeystoneDoc(project.description.document, project.id + " desc")
+          })
+        }
+      }
+
+      processedJobs.push({
+        id: job.id,
+        name: job.name,
+        role: job.role,
         desc: desc,
-        start: work.startDate,
-        end: work.endDate,
+        start: job.startDate,
+        end: job.endDate,
+        projects: processedProjects
       })
     }
 
-    processedData.sort((a, b) => dayjs(b.end).diff(dayjs(a.end)));
-    return processedData;
-  });
-
-  const [projectsData] = useState<projectsData[]>(() => {
-    const projectsProcessed: projectsData[] = [];
-
-    for (const project of projects) {
-      projectsProcessed.push({
-        id: project.id,
-        name: project.name,
-        link: project.link,
-        role: project.role,
-        images: processKeystoneGallery(project.images.document[1]),
-        responsibility: buildKeystoneDoc(project.responsibility.document, project.id + " res"),
-        technology: buildKeystoneDoc(project.technology.document, project.id + " tech"),
-        description: buildKeystoneDoc(project.description.document, project.id + " desc")
-      })
-    }
-
-    return projectsProcessed;
+    return processedJobs;
   })
 
+  const [display, setDisplay] = useState<{ details: Project, color: PortfolioColor }>({
+    details: portfolioData[0].projects[0],
+    color: colors[0]
+  })
+
+  if (!portfolioData) return <></>;
+
   return (
-    <div className="flex flex-col lg:grid items-start w-11/12 xl:w-2/3 grid-cols-5 gap-4 lg:mx-16">
-      <div className="grid grid-cols-2 w-full h-12 font-bold lg:hidden">
-        <div
-          className={`col-span-1 flex justify-center items-center border-b-2 
-          ${tab === 0 ? "border-emerald-700" : "border-white"}`}
-          onClick={() => setTab(0)}
-        >
-          Timeline
+    <ProjectContext.Provider value={{
+      display: display,
+      setDisplay: setDisplay,
+      selectColor: "bg-black"
+    }}>
+      <div className="flex flex-col lg:grid items-start w-11/12 grid-cols-2 gap-20 lg:mx-16">
+        <div className={`px-4 col-span-1 max-h-[75vh] overflow-y-scroll ver-scroll`}>
+          {portfolioData[0] && portfolioData.map((job, index) => (
+            <JobComponent key={job.id} jobData={job} index={index} color={colors[index % colors.length]} />
+          ))}
         </div>
-        <div
-          className={`col-span-1 flex justify-center items-center border-b-2
-          ${tab === 1 ? "border-emerald-700" : "border-white"}`}
-          onClick={() => setTab(1)}
-        >
-          Projects
+        <div className="col-span-1">
+          <ProjectDetails projectData={display.details} color={display.color} />
         </div>
       </div>
-      <div className={`lg:col-span-2 ${tab !== 0 && "hidden lg:block"}`}>
-        <div className="mb-4 font-bold text-2xl hidden lg:block">TIMELINE</div>
-        {timelineData && <Timeline jobs={timelineData} />}
-      </div>
-      <div className={`flex-1 h-full col-span-3 lg:pl-8 lg:border-l border-gray-300 mx-4 lg:mx-0 ${tab !== 1 && "hidden lg:block"}`}>
-        <div className="mb-4 font-bold text-2xl hidden lg:block">PROJECTS</div>
-        {projectsData && <Projects projects={projectsData} />}
-      </div>
-    </div>
+    </ProjectContext.Provider>
   );
 };
 
@@ -112,13 +136,9 @@ export const getStaticProps = async () => {
     query: TIMELINE_QUERY
   });
 
-  const projects = await query.Project.findMany({
-    query: PROJECTS_QUERY
-  })
-
   return {
     props: {
-      jobs, projects
+      jobs
     }
   }
 }

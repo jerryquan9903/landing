@@ -8,7 +8,7 @@ export const buildKeystoneDoc = (desc: any[], id: string) => {
       return <span className={className} key={`${index} ${lineIndex} ${id}`}>{text.text} </span>
     });
 
-    fullDesc.push(fullLine);
+    fullDesc.push(<div className="mb-2">{fullLine}</div>);
   }
 
   return fullDesc;

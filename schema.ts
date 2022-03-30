@@ -15,9 +15,9 @@ A field: The individual bits of data on your list, each with its own type.
 // Like the `config` function we use in keystone.ts, we use functions
 // for putting in our config so we get useful errors. With typescript,
 // we get these even before code runs.
-import * as path from 'path'
+import * as path from "path";
 import { list } from "@keystone-6/core";
-import { componentBlocks } from './component-blocks';
+import { componentBlocks } from "./component-blocks";
 
 // We're using some common fields in the starter. Check out https://keystonejs.com/docs/apis/fields#fields-api
 // for the full list of fields.
@@ -140,13 +140,13 @@ export const lists: Lists = {
     fields: {
       title: text({
         validation: {
-          isRequired: true
-        }
+          isRequired: true,
+        },
       }),
       publishDate: timestamp({
         validation: {
-          isRequired: true
-        }
+          isRequired: true,
+        },
       }),
       difficulty: relationship({
         ref: "Difficulty.rel",
@@ -229,23 +229,23 @@ export const lists: Lists = {
     fields: {
       name: text({
         validation: {
-          isRequired: true
-        }
+          isRequired: true,
+        },
       }),
       role: text({
         validation: {
-          isRequired: true
-        }
+          isRequired: true,
+        },
       }),
       startDate: timestamp({
         validation: {
-          isRequired: true
-        }
+          isRequired: true,
+        },
       }),
       endDate: timestamp({
         validation: {
-          isRequired: true
-        }
+          isRequired: true,
+        },
       }),
       desc: document({
         formatting: true,
@@ -255,41 +255,48 @@ export const lists: Lists = {
         ],
         links: true,
         dividers: true,
+      }),
+      projects: relationship({
+        ref: "Project.job",
+        many: true
       })
-    }
+    },
   }),
   Image: list({
     fields: {
-        name: text(),
-        image: image(),
-        publishDate: timestamp(),
-    }
+      name: text(),
+      image: image(),
+      publishDate: timestamp(),
+    },
   }),
   Project: list({
     fields: {
       name: text({
         validation: {
-          isRequired: true
-        }
+          isRequired: true,
+        },
+      }),
+      job: relationship({
+        ref: "Workplace.projects",
       }),
       link: text({
         validation: {
           match: {
             regex: /^http(s)*:\/\/.+(\.){1}.+$/g,
-            explanation: "Must be a website, prefixed with http:// or https://"
-          }
-        }
+            explanation: "Must be a website, prefixed with http:// or https://",
+          },
+        },
       }),
       images: document({
         ui: {
-          views: path.join(__dirname, './component-blocks')
+          views: path.join(__dirname, "./component-blocks"),
         },
-        componentBlocks
+        componentBlocks,
       }),
       role: text({
         validation: {
-          isRequired: true
-        }
+          isRequired: true,
+        },
       }),
       responsibility: document({
         formatting: true,
@@ -309,6 +316,11 @@ export const lists: Lists = {
         links: true,
         dividers: true,
       }),
+      short: text({
+        validation: {
+          isRequired: true,
+        },
+      }),
       description: document({
         formatting: true,
         layouts: [
@@ -317,7 +329,7 @@ export const lists: Lists = {
         ],
         links: true,
         dividers: true,
-      })
-    }
+      }),
+    },
   }),
 };
