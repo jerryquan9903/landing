@@ -27,6 +27,10 @@ export default withAuth(
       },
     },
     lists,
+    experimental: {
+      generateNextGraphqlAPI: true,
+      generateNodeAPI: true,
+    },
     session,
   })
 );
