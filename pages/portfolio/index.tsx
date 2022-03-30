@@ -2,11 +2,11 @@ import dayjs from "dayjs";
 import React, { useState } from "react";
 import Projects from "../../components/portfolio/Projects";
 import Timeline from "../../components/portfolio/Timeline";
-import api from "../../services/api";
 import { jobData, projectsData } from "../../services/commons";
 import { buildKeystoneDoc } from "../../services/tools/buildKeystoneDoc";
 import { processKeystoneGallery } from "../../services/tools/processKeystoneGallery";
 import { query } from '.keystone/api';
+import { Lists } from '.keystone/types';
 
 const TIMELINE_QUERY = `
   id

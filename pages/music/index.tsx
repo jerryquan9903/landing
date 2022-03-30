@@ -2,6 +2,7 @@ import Head from "next/head";
 import React from "react";
 import Sheets from "../../components/music/Sheets";
 import { query } from '.keystone/api';
+import { Lists } from '.keystone/types';
 import { Sheet } from "../../services/types";
 
 const SHEETS_QUERY = `
