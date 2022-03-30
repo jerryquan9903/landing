@@ -117,7 +117,7 @@ const Portfolio = ({ jobs }: { jobs: any }) => {
       setDisplay: setDisplay,
       selectColor: "bg-black"
     }}>
-      <div className="flex flex-col lg:grid items-start w-11/12 grid-cols-2 gap-20 lg:mx-16">
+      <div className="flex flex-col lg:grid items-start w-11/12 grid-cols-2 gap-20 lg:mx-16 relative">
         <div className={`px-4 col-span-1 max-h-[75vh] overflow-y-scroll ver-scroll`}>
           {portfolioData[0] && portfolioData.map((job, index) => (
             <JobComponent key={job.id} jobData={job} index={index} color={colors[index % colors.length]} />

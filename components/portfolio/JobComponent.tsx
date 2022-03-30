@@ -1,12 +1,9 @@
 import dayjs from 'dayjs';
-import React, { useContext } from 'react';
-import { ProjectContext } from '../../pages/portfolio';
+import React from 'react';
 import { Job, PortfolioColor } from '../../services/types';
 import ProjectComponent from './ProjectComponent';
 
 const JobComponent = ({ jobData, index, color }: { jobData: Job, index: number, color: PortfolioColor }) => {
-  const ctx: any = useContext(ProjectContext);
-
   return (
     <div className="w-full relative flex mb-8">
       <div className="relative">

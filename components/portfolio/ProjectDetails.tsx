@@ -1,7 +1,6 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { ChevronLeftIcon, ChevronRightIcon, XIcon } from '@heroicons/react/solid';
 import { PortfolioColor, Project } from '../../services/types';
-import { ProjectContext } from '../../pages/portfolio';
 
 const ImageViewer = (
   { feed, index, onClose, onChange }:
@@ -17,11 +16,11 @@ const ImageViewer = (
 
   return (
     <>
-      <div className="fixed inset-0 bg-white w-screen h-screen z-0"></div>
-      <div className="fixed top-8 right-8 cursor-pointer z-10" onClick={onClose}>
+      <div className="fixed inset-0 bg-white w-screen h-screen z-10"></div>
+      <div className="fixed top-8 right-8 cursor-pointer z-20" onClick={onClose}>
         <XIcon className="w-8 h-8 text-black" />
       </div>
-      <div className="fixed inset-24 bg-white flex flex-row justify-center items-center">
+      <div className="fixed inset-24 bg-white flex flex-row justify-center items-center z-20">
         <div className="cursor-pointer" onClick={prev}>
           <ChevronLeftIcon className={`"w-12 h-12 ${index <= 0 ? 'text-gray-300' : 'text-black'}`} />
         </div>
