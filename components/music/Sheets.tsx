@@ -125,7 +125,7 @@ const Sheets = ({ sheetsRaw }: { sheetsRaw: Sheet[] }) => {
               </svg>
             </div>
             <Dropdown
-              className="flex justify-between items-center w-full lg:w-56 font-semibold text-neutral-600 text-sm border border-neutral-300 bg-white rounded-md h-10 px-3"
+              className="flex justify-between items-center w-full lg:w-72 font-semibold text-neutral-600 text-sm border border-neutral-300 bg-white rounded-md h-10 px-3"
               text={sort}
               values={SORT_OPTIONS}
               onChange={(val, index) => sortSheets(val, index)}

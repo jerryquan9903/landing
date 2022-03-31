@@ -25,7 +25,7 @@ const ImageViewer = (
           <ChevronLeftIcon className={`"w-12 h-12 ${index <= 0 ? 'text-gray-300' : 'text-black'}`} />
         </div>
         <div className="w-full h-full object-contain flex justify-center">
-          <img className="h-full image-shadow rounded-xl" src={`http://localhost:3000${feed[index]}`} />
+          <img className="h-full image-shadow rounded-xl" src={`${feed[index]}`} />
         </div>
         <div className="cursor-pointer" onClick={next}>
           <ChevronRightIcon className={`w-12 h-12 ${index >= feed.length ? 'text-gray-300' : 'text-black'}`} />
@@ -77,7 +77,7 @@ const ProjectDetails = ({ projectData, color }: { projectData: Project, color: P
           {projectData.images[0] && projectData.images.map((url, index) => (
             <img
               className="object-contain rounded-lg mx-2 image-shadow cursor-pointer"
-              src={'http://localhost:3000' + url}
+              src={url}
               key={url}
               onClick={() => setShowImage({ show: true, index: index })}
             />

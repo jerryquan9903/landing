@@ -31,7 +31,7 @@ const Dropdown = ({ className = "", text, values, onChange }: DropdownProps) => 
           leaveFrom="transform opacity-100 scale-100"
           leaveTo="transform opacity-0 scale-95"
         >
-          <Menu.Items className="absolute right-0 min-w-[12rem] mt-2 origin-top-right bg-white divide-y divide-neutral-200 rounded-md ring-1 ring-black ring-opacity-10 focus:outline-none">
+          <Menu.Items className="absolute right-0 min-w-[16rem] mt-2 origin-top-right bg-white divide-y divide-neutral-200 rounded-md ring-1 ring-black ring-opacity-10 focus:outline-none">
             {values[0] && values.map((val, index) => (
               <Menu.Item key={val} onClick={() => onChange(val, index)}>
                 {({ active }) => (
