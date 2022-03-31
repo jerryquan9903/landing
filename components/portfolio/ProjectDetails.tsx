@@ -15,23 +15,23 @@ const ImageViewer = (
   }
 
   return (
-    <>
+    <div className="hidden lg:block">
       <div className="fixed inset-0 bg-white w-screen h-screen z-10"></div>
       <div className="fixed top-8 right-8 cursor-pointer z-20" onClick={onClose}>
         <XIcon className="w-8 h-8 text-black" />
       </div>
-      <div className="fixed inset-24 bg-white flex flex-row justify-center items-center z-20">
+      <div className="fixed inset-0 bg-white flex flex-row justify-center items-center z-20">
         <div className="cursor-pointer" onClick={prev}>
           <ChevronLeftIcon className={`"w-12 h-12 ${index <= 0 ? 'text-gray-300' : 'text-black'}`} />
         </div>
-        <div className="w-full h-full object-contain flex justify-center">
+        <div className="w-full flex-1 object-contain flex justify-center">
           <img className="h-full image-shadow rounded-xl" src={`${feed[index]}`} />
         </div>
         <div className="cursor-pointer" onClick={next}>
-          <ChevronRightIcon className={`w-12 h-12 ${index >= feed.length ? 'text-gray-300' : 'text-black'}`} />
+          <ChevronRightIcon className={`w-12 h-12 ${index >= feed.length - 1 ? 'text-gray-300' : 'text-black'}`} />
         </div>
       </div>
-    </>
+    </div>
   )
 }
 
