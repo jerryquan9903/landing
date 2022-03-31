@@ -282,7 +282,7 @@ export const lists: Lists = {
       link: text({
         validation: {
           match: {
-            regex: /^http(s)*:\/\/.+(\.){1}.+$/g,
+            regex: /^(http(s)*:\/\/.+(\.){1}.+)*$/g,
             explanation: "Must be a website, prefixed with http:// or https://",
           },
         },

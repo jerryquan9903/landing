@@ -49,7 +49,7 @@ const Sheets = ({ sheetsRaw }: { sheetsRaw: Sheet[] }) => {
         media: sheet.media.name,
         image: sheet.media.image?.url || "",
         difficulty: sheet.difficulty.name,
-        link: 'http://localhost:3000' + sheet.link.url,
+        link: sheet.link.url,
         date: sheet.publishDate,
         notes: sheet.notes && sheet.notes
       }
@@ -102,7 +102,7 @@ const Sheets = ({ sheetsRaw }: { sheetsRaw: Sheet[] }) => {
       <main className="">
         <h3 className="mt-8 text-xl font-bold text-black">Arrangements</h3>
         <div className="w-full lg:w-4/5 text-black">
-          <div className="mt-2 font-medium">
+          <div className="mt-2 font-medium text-lg">
             I play piano (and a few other music instruments) for fun. Sometimes I arrange songs for piano, mostly game
             soundtracks (especially JRPGs). These arrangements can range from easy stuff to songs as hard as
             <a href={hardVideo} className="text-sky-600" target="_blank" rel="noreferrer noopener">
