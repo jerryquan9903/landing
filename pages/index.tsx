@@ -18,14 +18,14 @@ export default function Home() {
             <Image src="/pictures/face.png" width={96} height={96} className="rounded-full" alt="face" />
             <div className="flex flex-col pl-4 text-black">
               <h1 className="text-2xl font-medium">Hi, I&apos;m Manh Quan Hoang.</h1>
-              <h3 className="mt-2 text-lg">Front-end developer.</h3>
+              <h3 className="mt-2 text-xl">Front-end developer.</h3>
             </div>
           </div>
-          <p className="mt-6">
+          <p className="mt-6 text-lg">
             This site is just for random stuff that I made for fun. Maybe some of my blogs and thoughts here and there,
             some small projects, or other stuff.
           </p>
-          <p className="mt-2">
+          <p className="mt-2 text-lg">
             But I am also shameless, so I will plug my{" "}
             <Link href="/portfolio">
               <a className="text-sky-600">portfolio</a>

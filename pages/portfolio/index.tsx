@@ -5,6 +5,7 @@ import { query } from '.keystone/api';
 import { Job, PortfolioColor, Project } from "../../services/types";
 import JobComponent from "../../components/portfolio/JobComponent";
 import ProjectDetails from "../../components/portfolio/ProjectDetails";
+import { XIcon } from "@heroicons/react/solid";
 
 const TIMELINE_QUERY = `
   id
@@ -41,25 +42,25 @@ const TIMELINE_QUERY = `
 
 const colors: PortfolioColor[] = [
   {
-    bgMain: "bg-red-200",
-    bgSub: "bg-red-100",
-    bgLine: "bg-red-600",
-    border: "border-red-600",
-    shadow: "shadow-red-400"
+    bgMain: "bg-rose-200",
+    bgSub: "bg-rose-100",
+    bgLine: "bg-rose-600",
+    border: "border-rose-600",
+    shadow: "shadow-rose-400"
   },
   {
-    bgMain: "bg-emerald-300",
-    bgSub: "bg-emerald-200",
-    bgLine: "bg-emerald-700",
-    border: "border-emerald-700",
-    shadow: "shadow-emerald-500"
+    bgMain: "bg-orange-200",
+    bgSub: "bg-orange-100",
+    bgLine: "bg-orange-600",
+    border: "border-orange-600",
+    shadow: "shadow-orange-400"
   },
   {
-    bgMain: "bg-sky-200",
-    bgSub: "bg-sky-100",
-    bgLine: "bg-sky-600",
-    border: "border-sky-600",
-    shadow: "shadow-sky-400"
+    bgMain: "bg-green-300",
+    bgSub: "bg-green-200",
+    bgLine: "bg-green-700",
+    border: "border-green-700",
+    shadow: "shadow-green-500"
   },
 ]
 
@@ -109,24 +110,35 @@ const Portfolio = ({ jobs }: { jobs: any }) => {
     color: colors[0]
   })
 
+  const [showOnMobile, setShowOnMobile] = useState<boolean>(false);
+
   if (!portfolioData) return <></>;
 
   return (
     <ProjectContext.Provider value={{
       display: display,
       setDisplay: setDisplay,
+      setShowOnMobile: setShowOnMobile,
       selectColor: "bg-black"
     }}>
-      <div className="flex flex-col lg:grid items-start w-11/12 grid-cols-2 gap-20 lg:mx-16 relative">
-        <div className={`px-4 col-span-1 max-h-[75vh] overflow-y-scroll ver-scroll`}>
+      <div className="flex flex-col lg:grid items-start w-11/12 grid-cols-2 gap-20 lg:mx-16 relative mt-8">
+        <div className={`px-4 col-span-1 lg:max-h-[75vh] lg:overflow-y-scroll ver-scroll`}>
           {portfolioData[0] && portfolioData.map((job, index) => (
             <JobComponent key={job.id} jobData={job} index={index} color={colors[index % colors.length]} />
           ))}
         </div>
-        <div className="col-span-1">
+        <div className="hidden lg:block col-span-1">
           <ProjectDetails projectData={display.details} color={display.color} />
         </div>
       </div>
+      {showOnMobile && (
+        <div className="lg:hidden fixed inset-0 z-[10000] bg-white p-4 flex flex-col items-end">
+          <div className="mb-4 cursor-pointer z-20" onClick={() => setShowOnMobile(false)}>
+            <XIcon className="w-8 h-8 text-black" />
+          </div>
+          <ProjectDetails projectData={display.details} color={display.color} />
+        </div>
+      )}
     </ProjectContext.Provider>
   );
 };

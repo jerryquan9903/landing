@@ -7,10 +7,13 @@ const ProjectComponent = (
 ) => {
   const ctx: any = useContext(ProjectContext);
 
-  const onClick = () => ctx.setDisplay({
-    details: projectData,
-    color: color
-  })
+  const onClick = () => {
+    ctx.setDisplay({
+      details: projectData,
+      color: color
+    });
+    ctx.setShowOnMobile(true);
+  }
 
   return (
     <div className="relative">

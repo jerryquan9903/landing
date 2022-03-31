@@ -28,7 +28,7 @@ const MobileMenu = () => {
   return (
     <>
       <div className="md:hidden fixed inset-x-0 top-0 z-[1000] h-16 w-full 
-      flex justify-between items-center p-4 bg-emerald-700 image-shadow">
+      flex justify-between items-center p-4 bg-sky-600 image-shadow">
         <div className="text-white font-bold">{title}</div>
         <div onClick={openMenu}>
           <MenuIcon className="w-8 h-8 text-white" />
@@ -41,7 +41,7 @@ const MobileMenu = () => {
       />
       <div
         className={`fixed inset-y-0 right-0 left-[20vw] menu-animation z-[1010] flex flex-col
-        ${open ? 'translate-x-0 image-shadow' : 'translate-x-full'} bg-emerald-700`}
+        ${open ? 'translate-x-0 image-shadow' : 'translate-x-full'} bg-sky-600`}
       >
         {menuItems.map((item) => (
           <Link href={item.href} key={item.text}>
@@ -54,7 +54,7 @@ const MobileMenu = () => {
 }
 
 const DesktopMenu = () => (
-  <div className="hidden md:flex items-center justify-end w-11/12 xl:w-2/3 h-24 text-xl font-bold text-emerald-700">
+  <div className="hidden md:flex items-center justify-end w-11/12 xl:w-2/3 h-24 text-xl font-bold text-sky-600">
     <Link href="/">
       <a className="mr-8">home</a>
     </Link>
@@ -76,7 +76,7 @@ const Layout = ({ children }: { children: JSX.Element }) => {
       <DesktopMenu />
       <MobileMenu />
       <div className="flex justify-center flex-1 w-full h-full mt-16 lg:mt-0">{children}</div>
-      <footer className="py-4">
+      <footer className="pt-4 pb-8 xl:pb-4 px-12 text-center">
         <div className="text-sm font-medium text-gray-600">
         Made with Next.js, Keystone.js, and Tailwind CSS
         </div>

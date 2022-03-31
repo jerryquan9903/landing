@@ -83,7 +83,7 @@ const ProjectDetails = ({ projectData, color }: { projectData: Project, color: P
             />
           ))}
         </div>
-        <div className="flex flex-col row-span-7 w-full h-[35vh] mt-4 ver-scroll overflow-y-scroll">
+        <div className="flex flex-col row-span-7 w-full h-[45vh] lg:h-[30vh] mt-4 ver-scroll overflow-y-scroll">
           <DescLine title="Description" lineText={projectData.description} />
           <DescLine title="Role" lineText={projectData.role} />
           <DescLine title="Responsibility" lineText={projectData.responsibility} />

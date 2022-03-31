@@ -7,8 +7,8 @@ const JobComponent = ({ jobData, index, color }: { jobData: Job, index: number, 
   return (
     <div className="w-full relative flex mb-8">
       <div className="relative">
-        <div className="absolute top-8 left-1/2 -translate-x-1/2 rounded-full bg-gray-300 w-6 h-6 border-4 border-black" />
-        <div className={`w-1 bg-black h-full ${index === 0 && 'mt-8'}`} />
+        <div className={`absolute top-8 left-1/2 -translate-x-1/2 rounded-full ${color.bgMain} w-6 h-6 border-4 border-slate-800`} />
+        <div className={`w-1 bg-slate-800 h-full ${index === 0 && 'mt-8'}`} />
       </div>
       <div className="flex flex-col">
         <div className="flex relative w-full pr-4 pl-8 mb-6">
